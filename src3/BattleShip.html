@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BattleShip</title>
+    <script src="./battleShipObjects.js" type="module" defer ></script>
+    <script src="./battleShipPositioning.js" type="module" defer></script>
+    <script src="./createGameboard.js" type="module" defer></script>
+    <link rel="stylesheet" href="./BattleShip.css">
+    
+</head>
+<body>
+    <div class="main-container">
+        <div class="change-direction">
+            <button class="vertical">VERTICAL</button>
+            <button class="horizontal">HORIZONTAL</button>
+            <button class="start-button">START GAME</button>
+        </div>
+
+        <div class="gameboard-container">
+        
+        </div>
+        <div class="ship-pics">
+            <button data-length="5" class="ship">Carrier (5)</button>
+            <button data-length="4" class="ship">Battleship (4)</button>
+            <button data-length="3" class="ship">Crusier (3)</button>
+            <button data-length="3" class="ship">Submarine (3)</button>
+            <button data-length="2" class="ship">Destroyer (2)</button>
+        </div>
+        <div class="enemy-gameboard-container">
+
+        </div>
+    </div>
+</body>
+</html>
