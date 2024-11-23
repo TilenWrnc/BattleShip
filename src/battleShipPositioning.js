@@ -1,6 +1,7 @@
 import { Ship, Gameboard } from "./battleShipObjects.js";
 import { createBoard } from './createGameboard.js';
 import {getCurrentDirection, changeDirection } from "./direction.js";
+import {changeCurrentPlayer, getCurrentPlayer} from "./currentPlayer.js";
 
 
 
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         allyShips[shipKey] = new Ship(currentShip.length, currentShip.name);
     }
 
-    function updateShipButton(currentShip) {
+    function updateShipButton() {
         shipButton.forEach((button) => {
             const shipName = button.textContent.split(" ")[0];
             if (currentShip.name == shipName) {
@@ -90,24 +91,24 @@ document.addEventListener("DOMContentLoaded", () => {
         if (getCurrentDirection() !== "horizontal") {
             changeDirection();
         }
-        console.log(getCurrentDirection());
     })
 
     allyGameboard.forEach((position) => {
-        position.addEventListener("click", () => {
-            let positionCoordinates = JSON.parse(position.dataset.coordinates);
-            if (currentShip) {
-                if ((currentShip.length + positionCoordinates[0] <= 10 && getCurrentDirection() == "vertical") ||
-                    (currentShip.length + positionCoordinates[1] <= 10 && getCurrentDirection() == "horizontal")) {
-                    const succesfullyPlaces = playerOneGameboard.putShipOnBoard(positionCoordinates, currentShip.length, currentShip.name, getCurrentDirection());
-                    if (succesfullyPlaces !== "invalid position") {
-                        getNeighbors(playerOneGameboard.filledBoard,playerOneGameboard);
-                        createShipArray(currentShip);
-                        updateBoard(allyGameboard,playerOneGameboard);
-                        updateShipButton(currentShip);
-                    } 
+            position.addEventListener("click", () => {  
+                let positionCoordinates = JSON.parse(position.dataset.coordinates);
+                if (currentShip !== null && getCurrentPlayer() == null) {
+                    if ((currentShip.length + positionCoordinates[0] <= 10 && getCurrentDirection() == "vertical") ||
+                        (currentShip.length + positionCoordinates[1] <= 10 && getCurrentDirection() == "horizontal")) {
+                        const succesfullyPlaces = playerOneGameboard.putShipOnBoard(positionCoordinates, currentShip.length, currentShip.name, getCurrentDirection());
+                        if (succesfullyPlaces !== "invalid position") {
+                            getNeighbors(playerOneGameboard.filledBoard,playerOneGameboard);
+                            createShipArray(currentShip);
+                            updateBoard(allyGameboard,playerOneGameboard);
+                            updateShipButton();
+                        } 
+                    }
                 }
-            }
+            
         })
     })
 
@@ -144,12 +145,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 (currentShip.length + x <= 10 && currentEnemyShipDirection === "vertical") ||
                 (currentShip.length + y <= 10 && currentEnemyShipDirection === "horizontal")
             ) {
-                const result = playerTwoGameboard.putShipOnBoard([x, y], currentShip.length, currentShip.name, currentEnemyShipDirection);
-                if (result !== "invalid position") {
+            const result = playerTwoGameboard.putShipOnBoard([x, y], currentShip.length, currentShip.name, currentEnemyShipDirection);
+            if (result !== "invalid position") {
                     placed = true;
                 }
             }
         }
+    }
+
+    function resetElementToActive(currentGameboard) {
+        currentGameboard.forEach((position) => {
+            position.style = "pointer-events: all;"
+        })
     }
 
     startButton.addEventListener("click", () => {
@@ -164,7 +171,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }   
             updateBoard(enemyGameboard, playerTwoGameboard);
+            changeCurrentPlayer();
+            resetElementToActive(allyGameboard);
+            resetElementToActive(enemyGameboard);
         }
     });
 
+    function enemyShots() {
+        let placed = false;
+        let coordinate = null;
+        while (!placed) {
+            const x = getRandomCoordinates();
+            const y = getRandomCoordinates();
+
+            const result = playerOneGameboard.enemyShotsTracker([x,y]);
+            if (result != "invalid") {
+                placed = true;
+                coordinate = [x,y];
+            }
+        }
+        console.log(coordinate);
+
+        allyGameboard.forEach((position) => {
+            if (JSON.parse(position.dataset.coordinates)[0] == coordinate[0] && JSON.parse(position.dataset.coordinates)[1] == coordinate[1]) {
+                const result = playerOneGameboard.recieveAttack(coordinate);
+                if (result == "hit") {
+                    Object.assign(position.style, {
+                        backgroundColor: "red",
+                        pointerEvents: "none",
+                    });
+                    position.innerHTML = "X";
+                } else {
+                    Object.assign(position.style, {
+                        backgroundColor: "darkgrey",
+                        pointerEvents: "none",
+                    });
+                }
+            }
+        })
+        changeCurrentPlayer();
+
+    }
+
+    enemyGameboard.forEach((position) => {
+            position.addEventListener("click", () => {
+                if (getCurrentPlayer() == "player 1") {
+                    const result = playerTwoGameboard.recieveAttack(JSON.parse(position.dataset.coordinates));
+                    console.log(result);
+                    if (result == "hit") {
+                        Object.assign(position.style, {
+                            backgroundColor: "red",
+                            pointerEvents: "none",
+                        });
+                        position.innerHTML = "X";
+                    } else {
+                        Object.assign(position.style, {
+                            backgroundColor: "darkgrey",
+                            pointerEvents: "none",
+                        });
+                    }
+                }
+                changeCurrentPlayer();
+                enemyShots();
+                console.log(playerOneGameboard)
+            })
+    })
+
 })
+

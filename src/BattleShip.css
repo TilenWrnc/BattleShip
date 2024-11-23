@@ -39,13 +39,12 @@
 }
 
 .filled {
-    background-color: lightcoral;
-    pointer-events: none
+    background-color: lightblue;
+    pointer-events: none;
 }
 
 .unavaliable {
     pointer-events: none;
-    background-color: gray;
 }
 
 .change-direction {

@@ -19,8 +19,9 @@ export class Ship {
 export class Gameboard {
     constructor() {
         this.filledBoard = [];
-        this.missed = [];
         this.disabled = [];
+        this.health = 17;
+        this.attacked = [];
     }
     
     isValidCoordinates(coordinateArray, ship, direction) {
@@ -41,6 +42,25 @@ export class Gameboard {
             } 
         } 
         return "valid position"
+    }
+
+    IsEnemyShotValid(attackedSpot) {
+        for (let i = 0; i < this.attacked.length; i++) {
+            if (this.attacked[i][0] == attackedSpot[0] && this.attacked[i][1] == attackedSpot[1]) {
+                return "invalid";
+            } 
+        }
+        return "valid";
+    }
+
+    enemyShotsTracker(attackedSpot) {
+        const isItValid = this.IsEnemyShotValid(attackedSpot);
+        if (isItValid == "valid") {
+            this.attacked.push(attackedSpot);
+            return "valid";
+        } else {
+            return "invalid";
+        }
     }
 
     putShipOnBoard(coordinateArray, shipSize, shipName, direction) {
@@ -64,17 +84,14 @@ export class Gameboard {
     recieveAttack(attackedSpot) {
         for (let i = 0; i < this.filledBoard.length; i++) {
             if (this.filledBoard[i][0] == attackedSpot[0] && this.filledBoard[i][1] == attackedSpot[1]) {
-                carrierShip.hit();
-                break;
-            } else {
-                this.missedAttack(attackedSpot);
-                break;
-            }
+                this.health -= 1;
+                if (this.health == "") {
+                    console.log("GAMEOVER");
+                }
+                return "hit";
+            } 
         }
-    }
-
-    missedAttack(attackedSpot) {
-        this.missed.push(attackedSpot);
+        return "miss";
     }
 }
 
