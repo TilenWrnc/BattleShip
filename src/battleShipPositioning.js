@@ -7,6 +7,7 @@ import {changeCurrentPlayer, getCurrentPlayer} from "./currentPlayer.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     createBoard(); 
+    console.log(getCurrentPlayer());
 
     const playerOneGameboard = new Gameboard();
     const playerTwoGameboard = new Gameboard();
@@ -153,11 +154,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function resetElementToActive(currentGameboard) {
+    function changePointerEvents(currentGameboard) {
+        console.log(getCurrentPlayer());
         currentGameboard.forEach((position) => {
-            position.style = "pointer-events: all;"
+            if (getCurrentPlayer() === "player 2") {
+                position.style.pointerEvents = "none";
+            } else if (getCurrentPlayer() == "player 1") {
+                position.style.pointerEvents = "all";
+            }
         })
     }
+
+    function gameStartPopup() {
+        const popup = document.querySelector(".game-start-popup");
+        popup.classList.add("animation-start");
+      
+    };
+
 
     startButton.addEventListener("click", () => {
         if (Object.keys(allyShips).length < 5 ) {
@@ -170,10 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 getNeighbors(playerTwoGameboard.filledBoard,playerTwoGameboard);
 
             }   
-            updateBoard(enemyGameboard, playerTwoGameboard);
             changeCurrentPlayer();
-            resetElementToActive(allyGameboard);
-            resetElementToActive(enemyGameboard);
+            gameStartPopup();
         }
     });
 
@@ -190,7 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 coordinate = [x,y];
             }
         }
-        console.log(coordinate);
 
         allyGameboard.forEach((position) => {
             if (JSON.parse(position.dataset.coordinates)[0] == coordinate[0] && JSON.parse(position.dataset.coordinates)[1] == coordinate[1]) {
@@ -207,17 +217,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         pointerEvents: "none",
                     });
                 }
+                if (playerOneGameboard.health == 0 || playerTwoGameboard.health == 0) {
+
+                }
             }
         })
         changeCurrentPlayer();
-
+        changePointerEvents(enemyGameboard);
     }
 
     enemyGameboard.forEach((position) => {
             position.addEventListener("click", () => {
-                if (getCurrentPlayer() == "player 1") {
+                if (getCurrentPlayer() === "player 1") {
                     const result = playerTwoGameboard.recieveAttack(JSON.parse(position.dataset.coordinates));
-                    console.log(result);
                     if (result == "hit") {
                         Object.assign(position.style, {
                             backgroundColor: "red",
@@ -230,10 +242,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             pointerEvents: "none",
                         });
                     }
+                    changeCurrentPlayer();
+                    changePointerEvents(enemyGameboard);
+                    setTimeout(() => {
+                    enemyShots();
+                    }, 1500);
                 }
-                changeCurrentPlayer();
-                enemyShots();
-                console.log(playerOneGameboard)
+                
             })
     })
 

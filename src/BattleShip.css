@@ -1,11 +1,24 @@
+body {
+    background: linear-gradient(to left, white, rgb(95, 93, 93),  rgb(134, 134, 134), black);
+
+}
+.main-container {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+}
 
 .gameboard-container,
 .enemy-gameboard-container {
     display: grid;
     gap: 0px;
-    width: 400px;
-    height: 400px;
+    width: 430px;
+    height: 430px;
     margin-top: 5%;
+    border: 5px solid rgb(233, 58, 58);
+    z-index: 1;
+    background-color: white;
+
 }
 
 .gameboard-element,
@@ -16,13 +29,15 @@
     margin: 0px;
     padding: 0px;
     gap: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+    z-index: 1;
 }
 
-.main-container {
-    display: flex;
-    gap: 20px;
-    justify-content: space-evenly;
-}
 
 .ship-pics {
     display: flex;
@@ -32,14 +47,19 @@
 }
 
 .ship {
-    border: 1px solid black;
+    border: 2px solid rgb(238, 202, 202);
+    background: white;
     padding: 10px;
     width: 100px;
     height: 60px;
+    border-radius: 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    z-index: 1;
+
 }
 
 .filled {
-    background-color: lightblue;
+    background-color: rgb(95, 198, 233);
     pointer-events: none;
 }
 
@@ -51,17 +71,93 @@
     display: flex;
     flex-direction: column;
     margin-top: 5%;
-}
+    z-index: 1;
 
+}
 
 .change-direction > button {
     height: 30px;
     width: 150px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+    font-size: larger;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .start-button {
     margin-top: 80px;
-    height: 150px;
+    z-index: 1;
     background-color: lightblue;
+}
+
+.ally-console {
+    display: flex;
+    margin-top: 3%;
+    gap: 30px;
+}
+
+.game-start-popup {
+    opacity: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    z-index: 0;
+}
+
+.animation-start {
+    animation: start-game 3s 1;
+}
+
+@keyframes start-game {
+    from {
+        transform: translateY(-3000px);
+        z-index: 10;
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+    70% {
+        transform: scale(1);
+        opacity: 1;
+        z-index: 10;
+    }
+
+    90% {
+        opacity: 0;
+    }
+
+    to {
+        z-index: 0;
+        transform: scale(0.5);
+        transform: translateY(-300px);
+    }
+
+
+}
+
+.game-start {
+    font-size: 150px;
+    background-color: rgb(48, 48, 48);
+    border-radius: 20px;
+    color: white;
+    padding: 20px;
+    border: 2px solid white;
+}
+
+.description {
+    font-size: 60px;
+    background-color: gray;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid white;
+
 }

@@ -85,9 +85,6 @@ export class Gameboard {
         for (let i = 0; i < this.filledBoard.length; i++) {
             if (this.filledBoard[i][0] == attackedSpot[0] && this.filledBoard[i][1] == attackedSpot[1]) {
                 this.health -= 1;
-                if (this.health == "") {
-                    console.log("GAMEOVER");
-                }
                 return "hit";
             } 
         }
