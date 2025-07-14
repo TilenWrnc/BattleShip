@@ -1,0 +1,153 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+@import url('https://fonts.cdnfonts.com/css/hagmolya');
+
+
+body {
+    background-image: url(./img/japan.jpg);
+    background-size: contain;
+    font-family: 'Hagmolya', sans-serif;
+}
+
+.main-container {
+    color: black;
+    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(238, 164, 177) , rgb(255, 255, 255));
+    height: 963px;
+    width: 60%;
+    margin-left: 40%;
+    padding-right: 0px;
+    margin-right: 0;
+}
+
+.main-container p {
+    font-size: 30px;
+}
+
+.main {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.intro-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 70px 0px 0px 220px;
+    width: 700px;
+    text-align: center;
+    padding-bottom: 70px;
+}
+
+form div {
+    padding: 20px;
+    position: relative;
+}
+
+input {
+    width: 350px;
+    height: 25px;
+    border-radius: 20px;
+    margin-right: 100px;
+    border: 3px solid black;
+    transition: box-shadow 0.3s;
+    padding-left: 15px;
+    font-weight: bolder;
+    font-size: 15px;
+
+}
+
+label {
+    position: absolute;
+    bottom: 48px;
+    padding-left: 5px;
+}
+
+form {
+    border-bottom: 5px  solid black;
+    border-top: 5px  solid black;
+    padding: 50px 0px ;
+
+}
+
+form p {
+    padding-left: 20px;
+    padding-bottom: 20px;
+
+}
+
+input:focus,
+input:hover {
+    outline: none;
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0px 0px 50px;
+}
+
+button {
+    font-size: 20px; 
+    height: 40px;
+    width: 250px;
+    font-family: 'Hagmolya', sans-serif;
+    margin-bottom: 15px;
+    border-radius: 40px;
+    background-color: rgb(255, 0, 0);
+    color: white;
+}
+
+button:hover {
+    outline: none;
+    box-shadow: 0 0 5px rgb(250, 57, 57);
+}
+
+
+span {
+    color: brown;
+}
+
+.button-container p {
+    font-size: 20px;
+}
+
+.japan-logo,
+.himeji-castle-logo,
+.samurai-logo {
+    position: absolute;
+}
+
+.japan-logo {
+    top: 25%;
+    left: 12%;
+    width: 300px;
+    height: auto;
+    border: 10px solid rgb(255, 159, 175);
+}
+
+.samurai-logo, 
+.himeji-castle-logo {
+    width: 100px;
+    height: auto;
+    top: 23%;
+}
+
+.samurai-logo {
+    left: 45%;
+}
+
+.himeji-castle-logo { 
+    left: 88%;
+}
+
+#psw-error {
+    font-size: 15px;
+}

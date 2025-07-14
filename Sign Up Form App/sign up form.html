@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="./sign up form.css">
+    <script src="./sign up form.js" defer></script>
+    <link href="https://fonts.cdnfonts.com/css/hagmolya" rel="stylesheet">
+
+</head>
+<body>
+    <img src="./img/japanlogo.jpg" alt="japanlogo" class="japan-logo">
+    <img src="img/himeji-castle.png" alt="himejicastle" class="himeji-castle-logo">
+    <img src="img/samurai.png" alt="samura" class="samurai-logo">
+    <div class="main-container">
+            <div class="intro-container">
+                <p> Sign up for a experience of a lifetime. You can be the next person that can discover the beautiful country of a rising sun.</p>
+                <p>Please sign up here! ↓</p>
+            </div>
+        <div class="main">
+            <form action="get" id="submit">
+                    <p>You know what to do!</p>
+                    <div>
+                        <label for="first-name">FIRST NAME</label>
+                        <input type="text" name="f-name" id="first-name">
+                        
+                        <label for="last-name">LAST NAME</label>
+                        <input type="text" name="l-name" id="last-name">
+                    </div>
+                    <div>
+                        <label for="gmail">EMAIL</label>
+                        <input type="email" name="user-mail" id="gmail">
+            
+                        <label for="phone">PHONE NUMBER</label>
+                        <input type="tel" name="user-phone" id="phone">
+                    </div>
+                    <div>
+                        <label for="psw">PASSWORD</label>
+                        <input type="password" name="user-password" id="psw">
+
+                        <label for="psw-confirm">CONFIRM PASSWORD</label>
+                        <input type="password" name="user-password-confirm" id="psw-confirm" onkeyup="validatePassword()">
+                        <span id="psw-error"></span>
+                    </div>    
+            </form>
+            <div class="button-container">
+                <button id="create">Create Account</button>
+                <p>Already have an account? <span>Log In</span></p>
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+</html>
